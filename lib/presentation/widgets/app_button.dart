@@ -20,8 +20,6 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     final child = isLoading
         ? const SizedBox(
             width: 22,
@@ -58,9 +56,7 @@ class AppButton extends StatelessWidget {
       height: 52,
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
-        style: color != null
-            ? ElevatedButton.styleFrom(backgroundColor: color)
-            : null,
+        style: color != null ? ElevatedButton.styleFrom(backgroundColor: color) : null,
         child: child,
       ),
     );

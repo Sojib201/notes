@@ -45,8 +45,7 @@ class AppTextField extends StatelessWidget {
             ? GestureDetector(
                 onTap: onSuffixTap,
                 child: Icon(suffixIcon, size: 20),
-              )
-            : null,
+              ) : null,
       ),
     );
   }

@@ -92,7 +92,7 @@ class _SplashPageState extends State<SplashPage>
                     const SizedBox(height: 24),
 
                     const Text(
-                      'Notable',
+                      'Notes',
                       style: TextStyle(
                         fontFamily: 'Nunito',
                         fontSize: 40,
