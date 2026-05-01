@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../core/constants/app_colors.dart';
 import '../controllers/note_controller.dart';
-import '../widgets/color_picker_row.dart';
 import '../widgets/app_button.dart';
 
 class AddNotePage extends StatefulWidget {
@@ -32,7 +31,6 @@ class _AddNotePageState extends State<AddNotePage> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _controller.titleController.clear();
         _controller.descriptionController.clear();
-        _controller.selectedColorIndex.value = 0;
       });
     }
   }
@@ -40,7 +38,6 @@ class _AddNotePageState extends State<AddNotePage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     return Scaffold(
       appBar: AppBar(
@@ -52,8 +49,7 @@ class _AddNotePageState extends State<AddNotePage> {
         actions: [
           if (_isEdit)
             IconButton(
-              icon: const Icon(Icons.delete_outline_rounded,
-                  color: AppColors.error),
+              icon: const Icon(Icons.delete_outline_rounded, color: AppColors.error),
               onPressed: () => _controller.deleteNote(
                 context,
                 widget.noteToEdit!['id'],
@@ -72,105 +68,72 @@ class _AddNotePageState extends State<AddNotePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Note Color',
-                      style: theme.textTheme.labelMedium?.copyWith(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 0.8,
+                    TextField(
+                      controller: _controller.titleController,
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.w700,
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    Obx(() => ColorPickerRow(
-                          selectedIndex: _controller.selectedColorIndex.value,
-                          isDark: isDark,
-                          onColorSelected: _controller.selectColor,
-                        )),
-                    const SizedBox(height: 24),
-
-                    Obx(() {
-                      final bgColor = isDark
-                          ? AppColors.cardColorsDark[
-                              _controller.selectedColorIndex.value]
-                          : AppColors.cardColorsLight[
-                              _controller.selectedColorIndex.value];
-
-                      return TextField(
-                        controller: _controller.titleController,
-                        style: theme.textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.w700,
-                        ),
-                        decoration: InputDecoration(
-                          hintText: 'Note title (optional)',
-                          hintStyle: theme.textTheme.headlineSmall?.copyWith(
+                      decoration: InputDecoration(
+                        hintText: 'Note title (optional)',
+                        hintStyle: theme.textTheme.headlineSmall?.copyWith(
                             color: theme.hintColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          filled: true,
-                          fillColor: bgColor,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(14),
-                            borderSide: BorderSide.none,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(14),
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(14),
-                            borderSide: const BorderSide(
-                              color: AppColors.primary,
-                              width: 2,
-                            ),
-                          ),
-                          contentPadding: const EdgeInsets.all(18),
+                            fontWeight: FontWeight.w300,
+                            fontSize: 16
                         ),
-                        maxLines: 1,
-                        textCapitalization: TextCapitalization.sentences,
-                      );
-                    }),
+                        filled: true,
+                        fillColor: theme.inputDecorationTheme.fillColor,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(14),
+                          borderSide: BorderSide.none,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(14),
+                          borderSide: BorderSide.none,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(14),
+                          borderSide: const BorderSide(
+                            color: AppColors.primary,
+                            width: 2,
+                          ),
+                        ),
+                        contentPadding: const EdgeInsets.all(18),
+                      ),
+                      maxLines: 1,
+                      textCapitalization: TextCapitalization.sentences,
+                    ),
                     const SizedBox(height: 16),
 
-                    Obx(() {
-                      final bgColor = isDark
-                          ? AppColors.cardColorsDark[
-                              _controller.selectedColorIndex.value]
-                          : AppColors.cardColorsLight[
-                              _controller.selectedColorIndex.value];
-
-                      return TextField(
-                        controller: _controller.descriptionController,
-                        style: theme.textTheme.bodyLarge,
-                        decoration: InputDecoration(
-                          hintText: 'Write your note here...',
-                          hintStyle: theme.textTheme.bodyLarge?.copyWith(
-                            color: theme.hintColor,
-                          ),
-                          filled: true,
-                          fillColor: bgColor,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(14),
-                            borderSide: BorderSide.none,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(14),
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(14),
-                            borderSide: const BorderSide(
-                              color: AppColors.primary,
-                              width: 2,
-                            ),
-                          ),
-                          contentPadding: const EdgeInsets.all(18),
-                          alignLabelWithHint: true,
+                    TextField(
+                      controller: _controller.descriptionController,
+                      style: theme.textTheme.bodyLarge,
+                      decoration: InputDecoration(
+                        hintText: 'Write your note here...',
+                        hintStyle: theme.textTheme.bodyLarge?.copyWith(color: theme.hintColor,),
+                        filled: true,
+                        fillColor: theme.inputDecorationTheme.fillColor,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(14),
+                          borderSide: BorderSide.none,
                         ),
-                        maxLines: null,
-                        minLines: 12,
-                        textCapitalization: TextCapitalization.sentences,
-                      );
-                    }),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(14),
+                          borderSide: BorderSide.none,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(14),
+                          borderSide: const BorderSide(
+                            color: AppColors.primary,
+                            width: 2,
+                          ),
+                        ),
+                        contentPadding: const EdgeInsets.all(18),
+                        alignLabelWithHint: true,
+                      ),
+                      maxLines: null,
+                      minLines: 12,
+                      textCapitalization: TextCapitalization.sentences,
+                    ),
                   ],
                 ),
               ),

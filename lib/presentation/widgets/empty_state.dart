@@ -16,7 +16,7 @@ class EmptyState extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Center(
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(40),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
