@@ -63,7 +63,6 @@ class AuthController extends GetxController {
     }
   }
 
-  // Update your registerWithEmail method in AuthController as follows:
   Future<void> registerWithEmail(BuildContext context) async {
     if (!registerFormKey.currentState!.validate()) return;
 
@@ -77,13 +76,10 @@ class AuthController extends GetxController {
         password: passwordController.text,
       );
 
-      // 1. Sign out the user so they don't get logged in automatically
       await _authService.signOut();
 
-      // 2. Clear controllers
       _clearControllers();
 
-      // 3. Show success message
       Get.snackbar(
         'Account Created',
         'Please log in with your new account',
@@ -94,32 +90,6 @@ class AuthController extends GetxController {
         borderRadius: 12,
       );
 
-      // 4. Navigate to the login screen
-      if (context.mounted) {
-        context.go(AppRouter.login);
-      }
-    } on FirebaseAuthException catch (e) {
-      errorMessage.value = _getAuthErrorMessage(e.code);
-    } catch (e) {
-      errorMessage.value = 'Something went wrong. Please try again.';
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
-  Future<void> registerWithEmail1(BuildContext context) async {
-    if (!registerFormKey.currentState!.validate()) return;
-
-    isLoading.value = true;
-    errorMessage.value = '';
-
-    try {
-      await _authService.registerWithEmail(
-        name: nameController.text,
-        email: emailController.text,
-        password: passwordController.text,
-      );
-      _clearControllers();
       if (context.mounted) {
         context.go(AppRouter.login);
       }
