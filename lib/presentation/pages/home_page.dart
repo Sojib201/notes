@@ -115,6 +115,10 @@ class HomePage extends StatelessWidget {
                         final note = displayNotes[index];
                         return NoteCard(
                           note: note,
+                          onTap: () => context.push(
+                            AppRouter.noteDetail,
+                            extra: note.toMap(),
+                          ),
                           onDelete: () => noteController.deleteNote(
                             context,
                             note.id,
